@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Página de Cadastros</title>
+</head>
+
+<body>
+    <form>
+        <h1>Cadastros</h1>
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div>
+            <button type="submit" id="cadastrar">Cadastrar</button>
+            <button id="listar">Listar Cadastros</button>
+        </div>
+        <div class="lista-cadastros">
+            <div class="cadastrado">
+                <h4>Cadastro 1</h2>
+                    <p>Nome:</p>
+                    <p>Email:</p>
+            </div>
+        </div>
+    </form>
+    <script src="script.js"></script>
+</body>
+
+</html>
