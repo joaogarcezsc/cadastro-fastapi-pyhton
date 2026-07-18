@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sqlite3
 
-conexao_inicial = sqlite3.connect("banco.db")
-cursor_inicial = conexao_inicial.cursor()
+conexao_incial = sqlite3.connect("banco.db")
+cursor_inicial = conexao_incial.cursor()
 
 cursor_inicial.execute("""CREATE TABLE IF NOT EXISTS cadastros(
                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -12,8 +12,8 @@ cursor_inicial.execute("""CREATE TABLE IF NOT EXISTS cadastros(
                email TEXT NOT NULL UNIQUE
                )""")
 
-conexao_inicial.commit()
-conexao_inicial.close()  
+conexao_incial.commit()
+conexao_inicial.close()
 
 app = FastAPI()
 
@@ -35,19 +35,22 @@ def registrar_cadastro(usuario: Cadastro):
 
     conexao = sqlite3.connect("banco.db")
     cursor = conexao.cursor()
-    
+
     try:
         cursor.execute(
-            "INSERT INTO cadastros (nome, email) VALUES (?, ?)", 
-            (usuario.nome, usuario.email)
-        )
+                "INSERT INTO cadastros (nome, email) VALUES (?, ?)", 
+                (usuario.nome, usuario.email)
+            )
+        
         conexao.commit()
+
         resposta = {"status": "Sucesso", "mensagem": f"{usuario.nome} foi salvo!"}
-        
+
     except sqlite3.IntegrityError:
+        # Caso o usuário tente cadastrar um e-mail que já existe (por causa do UNIQUE)
         resposta = {"status": "Erro", "mensagem": "Este e-mail já está cadastrado!"}
-        
-    finally:
-        conexao.close()
-        
+
+    finally: conexao.close()
+
+    # Retorna uma resposta de sucesso para o JavaScript
     return resposta
