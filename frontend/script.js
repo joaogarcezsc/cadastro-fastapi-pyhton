@@ -39,6 +39,7 @@ document.querySelector("#cadastrar").addEventListener("click", (evento) => {
   } else {
     alert("Por favor, insira valores válidos !");
   }
+  listar_cadastros();
 });
 
 document.querySelector("#listar").addEventListener("click", () => {
@@ -46,15 +47,39 @@ document.querySelector("#listar").addEventListener("click", () => {
     lista_cadastros.classList.remove("ativo");
   } else {
     lista_cadastros.classList.add("ativo");
+    listar_cadastros();
   }
 });
 
 async function buscar_dados() {
-  fetch("http://127.0.0.1:8000/listar")
+  return fetch("http://127.0.0.1:8000/listar")
     .then((resposta) => resposta.json())
     .then((dados) => {
-      console.log(dados);
+      return dados;
     })
     .catch((erro) => console.error("Erro ao buscar:", erro));
 }
 
+async function listar_cadastros() {
+  lista_cadastros.innerHTML = "";
+  const dados = await buscar_dados();
+  dados.forEach((element) => {
+    const h1 = document.createElement("h4");
+    h1.textContent = `Cadastro: ${element.id}`;
+    const p1 = document.createElement("p");
+    p1.textContent = `Nome: ${element.nome}`;
+    const p2 = document.createElement("p");
+    p2.textContent = `Email: ${element.email}`;
+
+    const div_cadastrado = document.createElement("div");
+
+    div_cadastrado.classList.add("cadastrado");
+    div_cadastrado.appendChild(h1);
+    div_cadastrado.appendChild(p1);
+    div_cadastrado.appendChild(p2);
+
+    lista_cadastros.appendChild(div_cadastrado);
+
+    console.log(div_cadastrado);
+  });
+}
