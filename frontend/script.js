@@ -3,6 +3,8 @@ let cadastro = {
   email: "",
 };
 
+const lista_cadastros = document.querySelector(".lista-cadastros");
+
 document.querySelector("#cadastrar").addEventListener("click", (evento) => {
   evento.preventDefault();
   const nome = document.querySelector("#nome").value;
@@ -38,3 +40,21 @@ document.querySelector("#cadastrar").addEventListener("click", (evento) => {
     alert("Por favor, insira valores válidos !");
   }
 });
+
+document.querySelector("#listar").addEventListener("click", () => {
+  if (lista_cadastros.classList.contains("ativo")) {
+    lista_cadastros.classList.remove("ativo");
+  } else {
+    lista_cadastros.classList.add("ativo");
+  }
+});
+
+async function buscar_dados() {
+  fetch("http://127.0.0.1:8000/listar")
+    .then((resposta) => resposta.json())
+    .then((dados) => {
+      console.log(dados);
+    })
+    .catch((erro) => console.error("Erro ao buscar:", erro));
+}
+

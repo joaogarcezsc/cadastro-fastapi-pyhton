@@ -49,5 +49,21 @@ def registrar_cadastro(usuario: Cadastro):
         
     finally:
         conexao.close()
-        
+
     return resposta
+
+@app.get("/listar")
+def listar_cadastro():
+
+    conexao = sqlite3.connect("banco.db")
+
+    conexao.row_factory = sqlite3.Row
+    cursor = conexao.cursor()
+
+    cursor.execute("""SELECT * FROM cadastros""")
+    cadastros = cursor.fetchall()
+
+    conexao.close()
+
+    return cadastros
+

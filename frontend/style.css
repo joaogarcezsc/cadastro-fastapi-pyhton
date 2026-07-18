@@ -8,7 +8,7 @@ body {
   background: #f7f7f7;
 }
 
-form {
+main {
   background: #fff;
   margin: 40px;
   padding: 40px;
@@ -42,4 +42,12 @@ button{
 
 #listar:hover{
     background: blue;
+}
+
+.lista-cadastros{
+    display: none;
+}
+
+.lista-cadastros.ativo{
+    display: block;
 }
